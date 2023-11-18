@@ -7,6 +7,7 @@ import {
 } from "./Util";
 import styled from "styled-components";
 import moment from "moment";
+import { CalendarCell } from "./CalendarCell";
 
 const CalendarControlsWrap = styled.div`
   height: 15%;
@@ -60,17 +61,7 @@ const CalendarCellWrap = styled.div`
   flex: 1;
 `;
 
-const CalendarCell = styled.div`
-  border: 1px solid #eee;
-  position: relative;
-  height: 100%;
-
-  &:hover {
-    background-color: #eee;
-  }
-`;
-
-export const Calendar = ({ onCellClicked, month, year, onPrev, onNext }) => {
+export const Calendar = ({ onCellClicked, month, year, onPrev, onNext, events }) => {
   const currentMonthMoment = moment(`${month}${year}`, "MMYYYY");
 
   // collection of days in a month and its segmented
@@ -91,7 +82,7 @@ export const Calendar = ({ onCellClicked, month, year, onPrev, onNext }) => {
             {daysOfTheWeek.map(day => <CalendarHeadingCell key={day}>{day}</CalendarHeadingCell> )}
           </CalendarHeading>
           {weeks.map((week, i) => {
-            const displayWeek = i === 0 //its its 0, that means its the first day of the week
+            const displayWeek = i === 0 //if its 0, that means its the first day of the week
                 ? padWeekFront(week)
                 : i === weeks.length - 1 // checking if its the last day of the week
                     ? padWeekBack(week)
@@ -99,16 +90,23 @@ export const Calendar = ({ onCellClicked, month, year, onPrev, onNext }) => {
 
             return (
               <CalendarRow key={i}>
-                {displayWeek.map((dayMoment, j) => (
-                  <CalendarCellWrap onClick={() => onCellClicked (
-                    dayMoment.format("DD"),
-                    dayMoment.format("MM"),
-                    dayMoment.format("YYYY"))}>
+                {displayWeek.map((dayMoment, j) => {
+                    const eventsForDay = events.filter(event => {
+                      return event.date.isSame(dayMoment, "day"); // checking if the the selected date and current date are same. filtering events based on that.
+                    });
+                  
+                  return (
+                    <CalendarCellWrap onClick={() => onCellClicked(
+                      dayMoment.format("DD"),
+                      dayMoment.format("MM"),
+                      dayMoment.format("YYYY"),
+                    )}>
                     {dayMoment 
-                        ? <CalendarCell key={dayMoment.format('D')}>{dayMoment.format('D')}</CalendarCell>
-                        : <CalendarCell key={`${i}${j}`}></CalendarCell>}
-                  </CalendarCellWrap>
-                ))}
+                        ? <CalendarCell dateNumber={dayMoment.format("D")} events={eventsForDay} key={dayMoment.format('D')} />
+                        : <CalendarCell key={`${i}${j}`} />}
+                    </CalendarCellWrap>
+                  )
+                })}
               </CalendarRow>
             );
           })}

@@ -55,6 +55,7 @@ export const CalendarController = () => {
         <NewEventForm onSubmit={createNewEvent} />
     </Modal>
     <Calendar
+      events={events}
       onCellClicked={displayModal}
       month={currentMonthMoment.format("MM")}
       year={currentMonthMoment.format("YYYY")}
