@@ -61,7 +61,7 @@ const CalendarCellWrap = styled.div`
   flex: 1;
 `;
 
-export const Calendar = ({ onCellClicked, month, year, onPrev, onNext, events }) => {
+export const Calendar = ({ onCellClicked, month, year, onPrev, onNext, getCellProps }) => {
   const currentMonthMoment = moment(`${month}${year}`, "MMYYYY");
 
   // collection of days in a month and its segmented
@@ -91,10 +91,7 @@ export const Calendar = ({ onCellClicked, month, year, onPrev, onNext, events })
             return (
               <CalendarRow key={i}>
                 {displayWeek.map((dayMoment, j) => {
-                    const eventsForDay = events.filter(event => {
-                      return event.date.isSame(dayMoment, "day"); // checking if the the selected date and current date are same. filtering events based on that.
-                    });
-                  
+
                   return (
                     <CalendarCellWrap onClick={() => onCellClicked(
                       dayMoment.format("DD"),
@@ -102,7 +99,7 @@ export const Calendar = ({ onCellClicked, month, year, onPrev, onNext, events })
                       dayMoment.format("YYYY"),
                     )}>
                     {dayMoment 
-                        ? <CalendarCell dateNumber={dayMoment.format("D")} events={eventsForDay} key={dayMoment.format('D')} />
+                        ? <CalendarCell dateNumber={dayMoment.format("D")} {...getCellProps(dayMoment)} key={dayMoment.format('D')} />
                         : <CalendarCell key={`${i}${j}`} />}
                     </CalendarCellWrap>
                   )

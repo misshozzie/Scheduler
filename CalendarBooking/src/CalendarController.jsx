@@ -34,8 +34,8 @@ export const CalendarController = () => {
     setCurrentMonthMoment(newMonth);
   }
 
-  const createNewEvent = name => {
-    setEvents(events.concat({ name, date: selectedDate }));
+  const createNewEvent = (name, time) => {
+    setEvents(events.concat({ name, time, date: selectedDate }));
     setShowNewEventModal(false); // hidding the modal after creating an event
     setSelectedDate(null);
   }
@@ -55,7 +55,14 @@ export const CalendarController = () => {
         <NewEventForm onSubmit={createNewEvent} />
     </Modal>
     <Calendar
-      events={events}
+      
+      getCellProps={(dayMoment) => {
+        const eventsForDay = events.filter(event => {
+          return event.date.isSame(dayMoment, "day"); // checking if the the selected date and current date are same. filtering events based on that.
+        });
+        
+        return {events: eventsForDay} // returning obj. with event props. this is where to figure out the eventsForDay
+      }}
       onCellClicked={displayModal}
       month={currentMonthMoment.format("MM")}
       year={currentMonthMoment.format("YYYY")}
