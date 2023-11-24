@@ -1,9 +1,9 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import moment from "moment";
-import { Calendar } from "./Calendar";
-import { Modal } from "./Modal";
-import { NewEventForm } from "./NewEventForm";
+import { Calendar } from "./Calendar.jsx";
+import { Modal } from "./Modal.jsx";
+import { NewEventForm } from "./NewEventForm.jsx";
 
 export const CalendarController = () => {
   const [events, setEvents] = useState([]);
@@ -67,8 +67,8 @@ export const CalendarController = () => {
       month={currentMonthMoment.format("MM")}
       year={currentMonthMoment.format("YYYY")}
       onPrev={decrementMonth}
-      onNext={incrementMonth} />
+      onNext={incrementMonth} 
+      />
     </>
   );
-  
 }

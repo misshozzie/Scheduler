@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
+
 const EventBox =styled.div`
     background-color: black;
     border-radius: 4px;
@@ -13,3 +14,4 @@ export const Event = ({name, time}) => {
         <EventBox>{name} - {time}</EventBox>
     );
 }
+export default Event;

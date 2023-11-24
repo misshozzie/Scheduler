@@ -32,4 +32,3 @@ export const Modal = ({ children, shouldShow, onRequestClose }) => {
         </>
     );
 }
-

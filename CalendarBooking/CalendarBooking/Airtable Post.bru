@@ -1,0 +1,28 @@
+meta {
+  name: Airtable Post
+  type: http
+  seq: 2
+}
+
+post {
+  url: https://api.airtable.com/v0/appgXtQByGQw5vxnL/calendarBooking
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: pat4Rf1s2QfBrJ2aE.844cbce2bf22100ff87a56122ecad30b1c176da55bdea807155b3a6ddc9f0c8b
+}
+
+body:json {
+  {
+    "fields": {
+      "Name": "Nouvel 18",
+      "Time": "AM",
+      "Date": "2023-11-13",
+      "Select": "Aircon Servicing",
+      "Site Address": "singapore 123",
+      "Remarks": "NA"
+    }
+  }
+}
